@@ -2,16 +2,14 @@ package Tests;
 
 import BaseTest.Base;
 import Pages.RegisterPage;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 import org.testng.annotations.*;
 
 public class RegisterTest extends Base {
     RegisterPage registerPage;
-    String emailAddress="user1@x.com";
+    String emailAddress="user4@x.com";
+    String AlreadyExistEmail="user1@x.com";
     String name="User2";
     String Password="123456";
     String day="10";
@@ -26,20 +24,16 @@ public class RegisterTest extends Base {
     String city="cairo";
     String zipcode="1287";
     String mobile="0123456789";
-    @BeforeTest
-    public void setup()  {
+    @BeforeClass
+    protected void setup()  {
         // Pass the driver from the Base class to RegisterPage
         registerPage = new RegisterPage(driver);
-        registerPage.enterLogin_Register();
+        registerPage.enterLogin_RegisterPage();
+
     }
     @Test
-    public void signUp(){
-        registerPage.signUpName(name);
-        registerPage.signUpEmail(emailAddress);
-        registerPage.clickOnSignUp1();
-    }
-    @Test(dependsOnMethods = "signUp")
-    public void fillRegisterDataValidData() throws InterruptedException {
+    public void fillRegisterDataValidData() {
+        registerPage.signUp(name,emailAddress);
         registerPage.chooseMrsButton();
         registerPage.enterPassword(Password);
         registerPage.enterDay(day);
@@ -55,5 +49,12 @@ public class RegisterTest extends Base {
         registerPage.enterZipcode(zipcode);
         registerPage.enterMobileNumber(mobile);
         registerPage.clickOnSignUp2();
+        Assert.assertTrue(registerPage.confirmationCreationMsg().isDisplayed());
     }
+    @Test
+    public void RegisterWithExistingUser(){
+        registerPage.signUp(name,AlreadyExistEmail);
+        Assert.assertTrue(registerPage.getAlreadyExistMsg().isDisplayed());
+    }
+
 }

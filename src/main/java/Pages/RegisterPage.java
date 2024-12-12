@@ -2,6 +2,7 @@ package Pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 public class RegisterPage {
@@ -12,7 +13,6 @@ public class RegisterPage {
     By titleMrButton=By.id("id_gender1");
     By titleMrsButton=By.id("id_gender2");
     By nameField=By.id("name");
-    By emailField=By.id("email");
     By emailAddress=By.xpath("(//input[@name='email'])[2]");
     By name=By.name("name");
     By passwordField=By.id("password");
@@ -31,13 +31,16 @@ public class RegisterPage {
     By mobileNumberField=By.id("mobile_number");
     By newsLetterButton=By.id("newsletter");
     By specialOfferButton=By.id("optin");
-    By signupBtn=By.linkText("Signup / Login");
+    By signUpLoginBtn=By.linkText("Signup / Login");
     By signup1=By.xpath("//button[contains(text(),'Signup')]");
     By signup2=By.xpath("//button[contains(text(),'Create Account')]");
+    By alreadyExistMsg=By.xpath("//p[contains(text(),'Email Address already exist!')]");
+    By accountCreated=By.xpath("//h2[@class='title text-center']");
 
     public RegisterPage(WebDriver driver){
         this.driver=driver;
     }
+
     public void signUpEmail(String email){
         driver.findElement(emailAddress).sendKeys(email);
     }
@@ -47,8 +50,8 @@ public class RegisterPage {
     public void clickOnSignUp1(){
         driver.findElement(signup1).click();
     }
-    public void enterLogin_Register()  {
-        driver.findElement(signupBtn).click();
+    public void enterLogin_RegisterPage()  {
+        driver.findElement(signUpLoginBtn).click();
     }
     public void chooseMrButton(){
         driver.findElement(titleMrButton).click();
@@ -58,9 +61,6 @@ public class RegisterPage {
     }
     public void enterNameField(String name){
         driver.findElement(nameField).sendKeys(name);
-    }
-    public void enterEmail(String email){
-        driver.findElement(emailField).sendKeys(email);
     }
     public void enterPassword(String password){
         driver.findElement(passwordField).sendKeys(password);
@@ -103,6 +103,9 @@ public class RegisterPage {
         Select selectCountry=new Select(driver.findElement(dropDownCountry));
         selectCountry.selectByValue(country);
     }
+    public WebElement getAlreadyExistMsg(){
+        return driver.findElement(alreadyExistMsg);
+    }
     public void enterState(String state){
         driver.findElement(stateField).sendKeys(state);
     }
@@ -117,6 +120,14 @@ public class RegisterPage {
     }
     public void clickOnSignUp2(){
         driver.findElement(signup2).click();
+    }
+    public void signUp(String name, String emailAddress){
+        signUpName(name);
+        signUpEmail(emailAddress);
+        clickOnSignUp1();
+    }
+    public WebElement confirmationCreationMsg(){
+        return driver.findElement(accountCreated);
     }
 
 }
