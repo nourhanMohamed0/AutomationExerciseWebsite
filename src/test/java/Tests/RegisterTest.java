@@ -80,11 +80,6 @@ public class RegisterTest extends Base {
        Assert.assertEquals(registerPage.getEmailField().getAttribute("validationMessage"),"Please include an '@' in the email address. '"+invalidEmail+"' is missing an '@'.");
 //       System.out.println(registerPage.getEmailField().getAttribute("validationMessage"));
     }
-//    @Test
-//    public void test(){
-//        registerPage.signUpEmail("Hello");
-//        registerPage.getEmailField().clear();
-//    }
     @Test
     public void registerWithInValidEmailAfterSymbol(){
         List<String> invalidMails = Arrays.asList(
@@ -116,20 +111,15 @@ public class RegisterTest extends Base {
         registerPage.signUp("testUser","user@x");
         Assert.assertEquals(driver.getCurrentUrl(),"https://automationexercise.com/login");
     }
-    @Test
-    public void registerWithInValidName(){
+    @Test(dataProvider = "initial signup data",dataProviderClass = TestData.TestData.class)
+    public void registerWithInValidName(String name,String mail){
         SoftAssert softAssert=new SoftAssert();
-        List<String> invalidNames = Arrays.asList(
-                "123456789", "           ","user55 ","!@#$%^&&"
-        );
-        for (int i=0;i<invalidNames.size();i++){
             registerPage.getNameField().clear();
-            registerPage.signUp(invalidNames.get(i),"user50@x.com");
+            registerPage.signUp(name,mail);
 //            Assert.assertEquals(driver.getCurrentUrl(),"https://automationexercise.com/login","Helllo"); //Hard Assertion
             wait.until(ExpectedConditions.urlToBe(driver.getCurrentUrl()));
             softAssert.assertEquals(driver.getCurrentUrl(),"https://automationexercise.com/login");
             registerPage.enterLogin_RegisterPage();
-    }
         softAssert.assertAll();
     }
 
