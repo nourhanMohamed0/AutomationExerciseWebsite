@@ -3,15 +3,21 @@ package Tests;
 import BaseTest.Base;
 import Pages.RegisterPage;
 import TestData.TestData;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+
 
 public class RegisterTest extends Base {
     RegisterPage registerPage;
-    String emailAddress="user5@x.com";
+    String emailAddress="user@x.com";
     String AlreadyExistEmail="user1@x.com";
     String name="User2";
     String Password="123456";
@@ -101,4 +107,37 @@ public class RegisterTest extends Base {
         registerPage.enterLogin_RegisterPage();
         softAssert.assertAll();
     }
+//    @Test
+//    public void LoginWithValidCredentials(){
+//        registerPage.login(emailAddress,Password);
+//        Assert.assertTrue(registerPage.LogoutBtn().isDisplayed());
+//    }
+//    @Test
+//    public void LoginWithEmptyMail(){
+//        registerPage.login("",Password);
+//        Assert.assertEquals(registerPage.getLoginMailField().getAttribute("validationMessage"),"Please fill out this field.");
+//    }@Test
+//    public void LoginWithEmptyPassword(){
+//        registerPage.login(emailAddress,"");
+//        Assert.assertEquals(registerPage.getPasswordField().getAttribute("validationMessage"),"Please fill out this field.");
+//    }
+//    @Test
+//    public void LoginWithInvalidMails(){
+//        registerPage.login(inValidMail,Password);
+//        Assert.assertTrue(registerPage.incorrectMailPassword().isDisplayed());
+//    }
+//    @Test
+//    public void LoginWithHeadingAndTrailingSpaces(){
+//        registerPage.login("           "+emailAddress+"    ",Password);
+//        Assert.assertTrue(registerPage.LogoutBtn().isDisplayed());
+//    }
+//    @Test(dataProvider = "browsers")
+//    public void loginWithDifferentBrowsers(String browser){
+//        if(browser.equals("firefox")){
+//            driver=new FirefoxDriver();
+//            driver.get(baseURL);
+//            driver.manage().window().maximize();
+//        }
+//    }
+
 }

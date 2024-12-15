@@ -36,10 +36,32 @@ public class RegisterPage {
     By signup2=By.xpath("//button[contains(text(),'Create Account')]");
     By alreadyExistMsg=By.xpath("//p[contains(text(),'Email Address already exist!')]");
     By accountCreated=By.xpath("//h2[@class='title text-center']");
+//    By loginMail=By.name("email");
+//    By loginPassword=By.name("password");
+    By loginBtn=By.xpath("//button[contains(text(),'Login')]");
+    By logoutBtn=By.linkText("Logout");
+    By incorrectCredentials=By.xpath("//p[contains(text(),'Your email or password is incorrect!')]");
 
     public RegisterPage(WebDriver driver){
         this.driver=driver;
     }
+//    public WebElement LogoutBtn(){
+//        return driver.findElement(logoutBtn);
+//    }
+//    public WebElement incorrectMailPassword(){
+//        return driver.findElement(incorrectCredentials);
+//    }
+//    public void loginWithMail(String mail){
+//        driver.findElement(loginMail).sendKeys(mail);
+//    }
+//    public void loginWithPassword(String password){
+//        driver.findElement(loginPassword).sendKeys(password);
+//    }
+//    public void login(String mail,String password){
+//        loginWithMail(mail);
+//        loginWithPassword(password);
+//        driver.findElement(loginBtn).click();
+//    }
 
     public void signUpEmail(String email){
         driver.findElement(emailAddress).sendKeys(email);

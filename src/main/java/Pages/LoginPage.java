@@ -12,7 +12,11 @@ public class LoginPage {
     By passwordLoginField=By.name("password");
     By emailLoginField=By.name("email");
     By signUpLoginBtn=By.linkText("Signup / Login");
-    By logOut=By.linkText("Logout");
+    By logOutBtn=By.linkText("Logout");
+    By incorrectCredentials=By.xpath("//p[contains(text(),'Your email or password is incorrect!')]");
+    By loginMail=By.name("email");
+    By loginPassword=By.name("password");
+
 
     public LoginPage (WebDriver driver){
         this.driver=driver;
@@ -31,11 +35,33 @@ public class LoginPage {
         driver.findElement(passwordLoginField).sendKeys(password);
     }
     public WebElement logOutElement(){
-        return driver.findElement(logOut);
+        return driver.findElement(logOutBtn);
     }
     public void clickLogOut(){
-        driver.findElement(logOut).click();
+        driver.findElement(logOutBtn).click();
     }
-
+    public WebElement LogoutBtn(){
+        return driver.findElement(logOutBtn);
+    }
+    public WebElement incorrectMailPassword(){
+        return driver.findElement(incorrectCredentials);
+    }
+    public void loginWithMail(String mail){
+        driver.findElement(loginMail).sendKeys(mail);
+    }
+    public void loginWithPassword(String password){
+        driver.findElement(loginPassword).sendKeys(password);
+    }
+    public void login(String mail,String password){
+        loginWithMail(mail);
+        loginWithPassword(password);
+        driver.findElement(loginBtn).click();
+    }
+    public WebElement getLoginMailField(){
+        return driver.findElement(loginMail);
+    }
+    public WebElement getPasswordField(){
+        return driver.findElement(loginPassword);
+    }
 
 }
