@@ -2,19 +2,17 @@ package Tests;
 
 import BaseTest.Base;
 import Pages.RegisterPage;
+import TestData.TestData;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
-import java.util.Arrays;
-import java.util.List;
 
 public class RegisterTest extends Base {
     RegisterPage registerPage;
     String emailAddress="user5@x.com";
     String AlreadyExistEmail="user1@x.com";
-    String invalidEmail="user1";
     String name="User2";
     String Password="123456";
     String day="10";
@@ -34,7 +32,6 @@ public class RegisterTest extends Base {
         // Pass the driver from the Base class to RegisterPage
         registerPage = new RegisterPage(driver);
         registerPage.enterLogin_RegisterPage();
-
     }
     @Test
     public void fillRegisterDataValidData() {
@@ -62,58 +59,32 @@ public class RegisterTest extends Base {
         Assert.assertTrue(registerPage.getAlreadyExistMsg().isDisplayed());
     }
     @Test
-    public void registerWithNameField(){
+    public void registerWithNameFieldOnly(){
         registerPage.signUp("",emailAddress);
         registerPage.clickOnSignUp1();
        Assert.assertEquals(registerPage.getNameField().getAttribute("validationMessage"),"Please fill out this field.");
     }
     @Test
-    public void registerWithEmailField(){
+    public void registerWithEmailFieldOnly(){
         registerPage.signUp(name,"");
         registerPage.clickOnSignUp1();
        Assert.assertEquals(registerPage.getEmailField().getAttribute("validationMessage"),"Please fill out this field.");
     }
-    @Test
-    public void registerWithInValidEmail(){
-        registerPage.signUp(name,invalidEmail);
-        registerPage.clickOnSignUp1();
-       Assert.assertEquals(registerPage.getEmailField().getAttribute("validationMessage"),"Please include an '@' in the email address. '"+invalidEmail+"' is missing an '@'.");
-//       System.out.println(registerPage.getEmailField().getAttribute("validationMessage"));
-    }
-    @Test
-    public void registerWithInValidEmailAfterSymbol(){
-        List<String> invalidMails = Arrays.asList(
-                "user@!domain.com",  // Invalid '!'
-                "user@#domain.com",  // Invalid '#'
-                "user@%domain.com",  // Invalid '%'
-                "user@domain$.com",  // Invalid '$'
-                "user@domain^com",   // Invalid '^'
-                "user@domain&com"    // Invalid '&'
-        );
-        List<String> expectedMessages = Arrays.asList(
-                "A part following '@' should not contain the symbol '!'.",
-                "A part following '@' should not contain the symbol '#'.",
-                "A part following '@' should not contain the symbol '%'.",
-                "A part following '@' should not contain the symbol '$'.",
-                "A part following '@' should not contain the symbol '^'.",
-                "A part following '@' should not contain the symbol '&'."
-        );
-        for (int i=0;i<expectedMessages.size();i++){
+    @Test(dataProvider = "Invalid mail format",dataProviderClass = TestData.class)
+    public void registerWithInValidEmailAfterSymbol(String mail,String errorMsg){
             registerPage.getEmailField().clear();
-            registerPage.signUp(name,invalidMails.get(i));
+            registerPage.signUp(name,mail);
             registerPage.clickOnSignUp1();
-            Assert.assertEquals(registerPage.getEmailField().getAttribute("validationMessage"),expectedMessages.get(i));
-        }
-//       System.out.println(registerPage.getEmailField().getAttribute("validationMessage"));
+            Assert.assertEquals(registerPage.getEmailField().getAttribute("validationMessage"),errorMsg);
     }
     @Test
     public void registerWithInValidEmailWithoutLTD(){
         registerPage.signUp("testUser","user@x");
         Assert.assertEquals(driver.getCurrentUrl(),"https://automationexercise.com/login");
     }
-    @Test(dataProvider = "initial signup data",dataProviderClass = TestData.TestData.class)
+    @Test(dataProvider = "initial signup data",dataProviderClass = TestData.class)
     public void registerWithInValidName(String name,String mail){
-        SoftAssert softAssert=new SoftAssert();
+
             registerPage.getNameField().clear();
             registerPage.signUp(name,mail);
 //            Assert.assertEquals(driver.getCurrentUrl(),"https://automationexercise.com/login","Helllo"); //Hard Assertion
@@ -122,5 +93,12 @@ public class RegisterTest extends Base {
             registerPage.enterLogin_RegisterPage();
         softAssert.assertAll();
     }
-
+    @Test(dataProvider = "Exceeding number of characters",dataProviderClass = TestData.class)
+    public void signupWithExceedingCharacters(String name,String mail){
+        registerPage.signUp(name,mail);
+        wait.until(ExpectedConditions.urlToBe(driver.getCurrentUrl()));
+        softAssert.assertEquals(driver.getCurrentUrl(),"https://automationexercise.com/login");
+        registerPage.enterLogin_RegisterPage();
+        softAssert.assertAll();
+    }
 }

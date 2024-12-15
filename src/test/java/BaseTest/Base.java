@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
+import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
@@ -17,11 +18,13 @@ public abstract class Base {
     protected static WebDriver driver;
     protected static WebDriverWait wait;
     protected static String baseURL="https://automationexercise.com/";
+    protected static SoftAssert softAssert;
     @BeforeSuite
     public static void SetUp() {
 
         driver=new ChromeDriver();
         driver.get(baseURL);
+        softAssert=new SoftAssert();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         wait=new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.manage().window().maximize();
