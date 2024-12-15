@@ -59,6 +59,13 @@ public class RegisterPage {
     public void chooseMrsButton(){
         driver.findElement(titleMrsButton).click();
     }
+    public WebElement getNameField(){
+        return driver.findElement(name);
+    }
+    public WebElement getEmailField(){
+        return driver.findElement(emailAddress);
+    }
+
     public void enterNameField(String name){
         driver.findElement(nameField).sendKeys(name);
     }
