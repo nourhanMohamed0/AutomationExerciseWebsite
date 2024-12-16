@@ -16,7 +16,8 @@ public class LoginPage {
     By incorrectCredentials=By.xpath("//p[contains(text(),'Your email or password is incorrect!')]");
     By loginMail=By.name("email");
     By loginPassword=By.name("password");
-
+    By deleteAccount=By.linkText("Delete Account");
+    By accountDeletedMsg=By.xpath("//p[contains(text(),'Your account has been permanently deleted!')]");
 
     public LoginPage (WebDriver driver){
         this.driver=driver;
@@ -27,6 +28,8 @@ public class LoginPage {
     }
     public void clickLoginBtn(){
         driver.findElement(loginBtn).click();
+    }public WebElement LoginBtn(){
+        return driver.findElement(loginBtn);
     }
     public void enterEmailLogin(String email){
         driver.findElement(emailLoginField).sendKeys(email);
@@ -49,6 +52,11 @@ public class LoginPage {
     public void loginWithMail(String mail){
         driver.findElement(loginMail).sendKeys(mail);
     }
+    public void clearMailField(){
+        driver.findElement(loginMail).clear();
+    }public void clearPasswordField(){
+        driver.findElement(loginPassword).clear();
+    }
     public void loginWithPassword(String password){
         driver.findElement(loginPassword).sendKeys(password);
     }
@@ -63,5 +71,9 @@ public class LoginPage {
     public WebElement getPasswordField(){
         return driver.findElement(loginPassword);
     }
+    public WebElement getDeleteAccountBtn(){
+        return driver.findElement(deleteAccount);
+    }
+
 
 }

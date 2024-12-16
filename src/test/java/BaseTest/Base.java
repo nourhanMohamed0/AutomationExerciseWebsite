@@ -16,14 +16,14 @@ public abstract class Base {
     protected static String baseURL="https://automationexercise.com/";
     protected static SoftAssert softAssert;
     @BeforeTest
-    @Parameters("browser")
-    public static void SetUp(String browser) {
-        if(browser.equalsIgnoreCase("chrome")){
+    //@Parameters("browser")
+    public static void SetUp(@Optional("chrome") String browser) {
+        if(browser.equalsIgnoreCase("chrome"))
             driver=new ChromeDriver();
-        }
-        else if(browser.equalsIgnoreCase("firefox")){
+
+        else if(browser.equalsIgnoreCase("firefox"))
             driver=new FirefoxDriver();
-        }
+
         driver.get(baseURL);
         softAssert=new SoftAssert();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);

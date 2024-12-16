@@ -2,6 +2,7 @@ package Tests;
 
 import BaseTest.Base;
 import Pages.LoginPage;
+import TestData.TestData;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -51,12 +52,40 @@ public class LoginTest extends Base {
         loginPage.login("           "+emailAddress+"    ",Password);
         Assert.assertTrue(loginPage.LogoutBtn().isDisplayed());
     }
-//    @Test(dataProvider = "browsers")
-//    public void loginWithDifferentBrowsers(String browser){
-//        if(browser.equals("firefox")){
-//            driver=new FirefoxDriver();
-//            driver.get(baseURL);
-//            driver.manage().window().maximize();
-//        }
-//    }
+    @Test
+    public void loginAfterDeleteAccount(){
+        loginPage.login(emailAddress,Password);
+        wait.until(ExpectedConditions.visibilityOf(loginPage.logOutElement()));
+        loginPage.getDeleteAccountBtn().click();
+        loginPage.enterLogin_RegisterPage();
+        loginPage.login(emailAddress,Password);
+        Assert.assertTrue(loginPage.incorrectMailPassword().isDisplayed());
+    }
+    @Test(dataProvider = "CaseSensitive",dataProviderClass = TestData.class)
+    public void loginCaseSensitive(String mail){
+        loginPage.clearMailField();
+        loginPage.clearPasswordField();
+        loginPage.login(mail,Password);
+        wait.until(ExpectedConditions.visibilityOf(loginPage.incorrectMailPassword()));
+        softAssert.assertTrue(loginPage.incorrectMailPassword().isDisplayed());
+    }
+    @Test
+    public void loginFailedWith3Times(){
+        for(int i=0;i<=3;i++) {
+            loginPage.clearMailField();
+            loginPage.clearPasswordField();
+            loginPage.login(inValidMail, Password);
+        }
+        Assert.assertFalse(loginPage.LoginBtn().isEnabled());
+    }
+    @Test
+    public void Login_BackForward(){
+        loginPage.login("testUser@x.com",Password);
+        wait.until(ExpectedConditions.urlToBe("https://automationexercise.com/"));
+        driver.navigate().back();
+        softAssert.assertTrue(loginPage.getLoginMailField().getText().isEmpty());
+        softAssert.assertTrue(loginPage.getPasswordField().getText().isEmpty());
+        driver.navigate().forward();
+        softAssert.assertTrue(driver.getCurrentUrl().equals("https://automationexercise.com/"));
+    }
 }
