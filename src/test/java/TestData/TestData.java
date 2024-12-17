@@ -51,10 +51,31 @@ public class TestData {
         return new Object[][]{
                 {"12345"}, {"12345-6789"},
         };
-    }@DataProvider(name="invalid ZIP Code")
+    }@DataProvider(name="invalid ZIP Code format/length")
     public Object[][] inValidZIPCode(){
         return new Object[][]{
-                {"123@#"},{"123  45"},{"zipco"},{"NM258"}
+                {"123@#"},{"123  45"},{"zipco"},{"NM258"},{"١٢٣٤٥"},{"1234"},{"1234567"}
+        };
+    }
+@DataProvider(name="valid Mobile Number")
+    public Object[][] MobileNumberData(){
+        return new Object[][]{
+                {"01020798917"},{"+20102255971"}
+        };
+    }@DataProvider(name="invalid Mobile Number format/length")
+    public Object[][] InValidMobileNumberData(){
+        return new Object[][]{
+                {"@##%^^$#"},{"+2010  225 5 9 71"},{"0103355TR$"},{"testUser"},{"         "},{"0102255"},{"0000000000"},{"01022559710102255971"}
+        };
+    }@DataProvider(name="Valid City")
+    public Object[][] ValidCityData(){
+        return new Object[][]{
+                {"Cairo"},{"CAIRO"},{"New York"},{"NEw-York"},{"O'Connor"},{"             cairo       "}
+        };
+    }@DataProvider(name="InValid City")
+    public Object[][] InValidCityData(){
+        return new Object[][]{
+                {"Cairo12345"},{"&^%^%$@!"},{"            "},{"123456789"},{"NEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-YorkNEw-York"}
         };
     }
 

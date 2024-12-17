@@ -38,6 +38,7 @@ public class SignupPage {
     By nameSignUp=By.name("name");
     By signUpLoginBtn=By.linkText("Signup / Login");
     By deleteAccountBtn=By.linkText("Delete Account");
+    By continueAfterDelete=By.linkText("Continue");
 
     public SignupPage(WebDriver driver){
         this.driver=driver;
@@ -98,11 +99,11 @@ public class SignupPage {
     public void clickOnSignUp2(){
         driver.findElement(signup2).click();
     }
-    public void chooseMrButton(){
-        driver.findElement(titleMrButton).click();
+    public WebElement chooseMrButton(){
+        return driver.findElement(titleMrButton);
     }
-    public void chooseMrsButton(){
-        driver.findElement(titleMrsButton).click();
+    public WebElement chooseMrsButton(){
+        return driver.findElement(titleMrsButton);
     }
     public void enterNameField(String name){
         driver.findElement(nameField).sendKeys(name);
@@ -129,13 +130,16 @@ public class SignupPage {
     }
     public WebElement getDeleteAccountBtn(){
         return driver.findElement(deleteAccountBtn);
+    }public WebElement getContinueAfterDeleteAccount(){
+        return driver.findElement(continueAfterDelete);
     }
     public void fillRegisterData(String pass,String day,String month,String year,String firstName,String lastName,
                                           String company,String Address,String country,String state,String city,String zipcode,
     String mobile,String gender) {
+
         if(gender.equalsIgnoreCase("female"))
-        chooseMrsButton();
-        else if(gender.equalsIgnoreCase("male")) chooseMrButton();
+        chooseMrsButton().click();
+        else if(gender.equalsIgnoreCase("male")) chooseMrButton().click();
         enterPassword().sendKeys(pass);
         enterDay(day);
         enterMonth(month);

@@ -3,7 +3,7 @@ package Tests;
 import BaseTest.Base;
 import Pages.SignupPage;
 import TestData.TestData;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -79,6 +79,7 @@ public class SignupTest extends Base {
         softAssert.assertFalse(signupPage.confirmationCreationMsg().isDisplayed());
         signupPage.enterLogin_RegisterPage();
         signupPage.getDeleteAccountBtn().click();
+        signupPage.getContinueAfterDeleteAccount().click();
         signupPage.enterLogin_RegisterPage();
         signupPage.signUp(Name,email);
     }@Test(dataProvider = "first last Name",dataProviderClass = TestData.class)
@@ -87,6 +88,7 @@ public class SignupTest extends Base {
         softAssert.assertFalse(signupPage.confirmationCreationMsg().isDisplayed());
         signupPage.enterLogin_RegisterPage();
         signupPage.getDeleteAccountBtn().click();
+        signupPage.getContinueAfterDeleteAccount().click();
         signupPage.enterLogin_RegisterPage();
         signupPage.signUp(Name,email);
     }@Test(dataProvider = "valid ZIP Code",dataProviderClass = TestData.class)
@@ -95,17 +97,85 @@ public class SignupTest extends Base {
         softAssert.assertTrue(signupPage.confirmationCreationMsg().isDisplayed());
         signupPage.enterLogin_RegisterPage();
         signupPage.getDeleteAccountBtn().click();
+        signupPage.getContinueAfterDeleteAccount().click();
         signupPage.enterLogin_RegisterPage();
         signupPage.signUp(Name,email);
     }
-@Test(dataProvider = "invalid ZIP Code",dataProviderClass = TestData.class)
+@Test(dataProvider = "invalid ZIP Code format/length",dataProviderClass = TestData.class)
     public void fillRegisterDataWithInValidZIPCode(String zip) {
     signupPage.fillRegisterData(Password,day,month,year,firstName,lastName,company,Address,country,state,city,zip,mobile,"female");
         softAssert.assertFalse(signupPage.confirmationCreationMsg().isDisplayed());
         signupPage.enterLogin_RegisterPage();
         signupPage.getDeleteAccountBtn().click();
+        signupPage.getContinueAfterDeleteAccount().click();
         signupPage.enterLogin_RegisterPage();
         signupPage.signUp(Name,email);
     }
+@Test(dataProvider = "invalid Mobile Number format/length",dataProviderClass = TestData.class)
+    public void fillRegisterDataWithInValidMobileNumber(String mobileNumber) {
+        wait.until(ExpectedConditions.visibilityOf(signupPage.chooseMrButton()));
+    signupPage.fillRegisterData(Password,day,month,year,firstName,lastName,company,Address,country,state,city,zipcode,mobileNumber,"female");
+    softAssert.assertFalse(signupPage.confirmationCreationMsg().isDisplayed());
+        signupPage.enterLogin_RegisterPage();
+        signupPage.getDeleteAccountBtn().click();
+        wait.until(ExpectedConditions.visibilityOf(signupPage.getContinueAfterDeleteAccount()));
+        signupPage.getContinueAfterDeleteAccount().click();
+        signupPage.enterLogin_RegisterPage();
+        signupPage.signUp(Name,email);
+        softAssert.assertAll();
+    }
+@Test(dataProvider = "Valid City",dataProviderClass = TestData.class)
+    public void fillRegisterDataWithValidCity(String city) {//Mrs
+        wait.until(ExpectedConditions.visibilityOf(signupPage.chooseMrButton()));
+    signupPage.fillRegisterData(Password,day,month,year,firstName,lastName,company,Address,country,state,city,zipcode,mobile,"female");
+    softAssert.assertTrue(signupPage.confirmationCreationMsg().isDisplayed());
+        signupPage.enterLogin_RegisterPage();
+        signupPage.getDeleteAccountBtn().click();
+        wait.until(ExpectedConditions.visibilityOf(signupPage.getContinueAfterDeleteAccount()));
+        signupPage.getContinueAfterDeleteAccount().click();
+        signupPage.enterLogin_RegisterPage();
+        signupPage.signUp(Name,email);
+        softAssert.assertAll();
+    }
+@Test(dataProvider = "InValid City",dataProviderClass = TestData.class)
+    public void fillRegisterDataWithInValidCity(String city) {
+        wait.until(ExpectedConditions.visibilityOf(signupPage.chooseMrButton()));
+    signupPage.fillRegisterData(Password,day,month,year,firstName,lastName,company,Address,country,state,city,zipcode,mobile,"female");
+    softAssert.assertFalse(signupPage.confirmationCreationMsg().isDisplayed());
+        signupPage.enterLogin_RegisterPage();
+        signupPage.getDeleteAccountBtn().click();
+        wait.until(ExpectedConditions.visibilityOf(signupPage.getContinueAfterDeleteAccount()));
+        signupPage.getContinueAfterDeleteAccount().click();
+        signupPage.enterLogin_RegisterPage();
+        signupPage.signUp(Name,email);
+        softAssert.assertAll();
+    }
+@Test(dataProvider = "Valid City",dataProviderClass = TestData.class)
+    public void fillRegisterDataWithValidState(String State) {//Mrs
+        wait.until(ExpectedConditions.visibilityOf(signupPage.chooseMrButton()));
+    signupPage.fillRegisterData(Password,day,month,year,firstName,lastName,company,Address,country,State,city,zipcode,mobile,"female");
+    softAssert.assertTrue(signupPage.confirmationCreationMsg().isDisplayed());
+        signupPage.enterLogin_RegisterPage();
+        signupPage.getDeleteAccountBtn().click();
+        wait.until(ExpectedConditions.visibilityOf(signupPage.getContinueAfterDeleteAccount()));
+        signupPage.getContinueAfterDeleteAccount().click();
+        signupPage.enterLogin_RegisterPage();
+        signupPage.signUp(Name,email);
+        softAssert.assertAll();
+    }
+@Test(dataProvider = "InValid City",dataProviderClass = TestData.class)
+    public void fillRegisterDataWithInValidState(String State) {
+        wait.until(ExpectedConditions.visibilityOf(signupPage.chooseMrButton()));
+    signupPage.fillRegisterData(Password,day,month,year,firstName,lastName,company,Address,country,State,city,zipcode,mobile,"female");
+    softAssert.assertFalse(signupPage.confirmationCreationMsg().isDisplayed());
+        signupPage.enterLogin_RegisterPage();
+        signupPage.getDeleteAccountBtn().click();
+        wait.until(ExpectedConditions.visibilityOf(signupPage.getContinueAfterDeleteAccount()));
+        signupPage.getContinueAfterDeleteAccount().click();
+        signupPage.enterLogin_RegisterPage();
+        signupPage.signUp(Name,email);
+        softAssert.assertAll();
+    }
+
 
 }
