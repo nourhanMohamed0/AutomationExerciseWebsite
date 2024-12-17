@@ -13,7 +13,9 @@ public class LoginTest extends Base {
     String Password="123456";
     LoginPage loginPage;
     String inValidMail="invalidUser@x.com";
-    String emailAddress="user@x.com";
+    String emailAddress="testUser2@x.com";
+    String name="testUser2";
+
     @BeforeClass
     public void setUp(){
         loginPage =new LoginPage(driver);
@@ -32,6 +34,7 @@ public class LoginTest extends Base {
     public void LoginWithValidCredentials(){
         loginPage.login(emailAddress,Password);
         Assert.assertTrue(loginPage.LogoutBtn().isDisplayed());
+        softAssert.assertEquals(loginPage.getUserName(name).getText(),name);
     }
     @Test
     public void LoginWithEmptyMail(){

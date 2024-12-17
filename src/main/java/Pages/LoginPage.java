@@ -19,6 +19,7 @@ public class LoginPage {
     By deleteAccount=By.linkText("Delete Account");
     By accountDeletedMsg=By.xpath("//p[contains(text(),'Your account has been permanently deleted!')]");
 
+
     public LoginPage (WebDriver driver){
         this.driver=driver;
     }
@@ -73,6 +74,10 @@ public class LoginPage {
     }
     public WebElement getDeleteAccountBtn(){
         return driver.findElement(deleteAccount);
+    }
+    public WebElement getUserName(String name){
+        return driver.findElement(By.xpath("//b[contains(text(),'"+name+"')]"));
+
     }
 
 

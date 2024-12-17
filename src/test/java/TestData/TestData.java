@@ -38,7 +38,24 @@ public class TestData {
                 {"TESTUSER@x.com"},
                 {"TESTUSER@X.COM"}
         };
-
+    }
+    @DataProvider(name="first last Name")
+    public Object[][] firstLastNameDate(){
+        return new Object[][]{
+                {"123456"},
+                {"^@#^&#@^"},
+                {"55Ahmed55"}
+        };
+    }@DataProvider(name="valid ZIP Code")
+    public Object[][] validZIPCode(){
+        return new Object[][]{
+                {"12345"}, {"12345-6789"},
+        };
+    }@DataProvider(name="invalid ZIP Code")
+    public Object[][] inValidZIPCode(){
+        return new Object[][]{
+                {"123@#"},{"123  45"},{"zipco"},{"NM258"}
+        };
     }
 
 }
