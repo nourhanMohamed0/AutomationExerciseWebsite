@@ -15,6 +15,17 @@ public class ProductsPage {
     By productsName = By.cssSelector(".productinfo.text-center p");
     By womenCategory = By.linkText("Women");
     By productsBtn = By.partialLinkText("Prod");
+    By addToCartBtn=By.linkText("Add to cart");
+    By addToCartConfirm=By.className("modal-content");
+    By cartButton=By.linkText("Cart");
+    By viewProductBtn=By.linkText("View Product");
+    By viewProductBtn2=By.xpath("//a[contains(text(),'View Product')]");
+    By productPrice=By.xpath("//span[contains(text(),'Rs')]");
+    By productName=By.xpath("(//h2[contains(text(),'')])[3]");
+    By productCategory=By.xpath("(//p[contains(text(),'')])[3]");
+    By productAvailability=By.xpath("//p[b[text()='Availability:']]");
+    By productCondition=By.xpath("//p[b[text()='Condition:']]");
+    By productBrand=By.xpath("//p[b[text()='Brand:']]");
 
     public ProductsPage(WebDriver driver) {
         this.driver = driver;
@@ -34,6 +45,29 @@ public class ProductsPage {
 
         return productNames;
     }
+    public String getProductPrice(){
+        String price=driver.findElement(productPrice).getText();
+        return price.replace("Rs.","").trim();
+    }
+    public String getProductName(){
+        return driver.findElement(productName).getText();
+    }
+    public String getProductBrand(){
+        String brand=driver.findElement(productBrand).getText();
+        return brand.replace("Brand:","").trim();
+    }
+    public String getProductAvailability(){
+         String availability= driver.findElement(productAvailability).getText();
+         return availability.replace("Availability:","").trim();
+    }
+public String getProductCondition(){
+         String condition= driver.findElement(productCondition).getText();
+    return condition.replace("Condition:","").trim();
+    }
+public String getProductCategory(){
+        return driver.findElement(productCategory).getText();
+    }
+
 
     public void Search(String search) {
         driver.findElement(searchBar).sendKeys(search);
@@ -50,4 +84,20 @@ public class ProductsPage {
     public WebElement getProductsNames(){
         return driver.findElement(productsName);
     }
+    public WebElement getAddToCartBtn(){
+        return driver.findElement(addToCartBtn);
+    }
+    public WebElement getAddToCartConfirm(){
+        return driver.findElement(addToCartConfirm);
+    }
+    public WebElement getCartBtn(){
+        return driver.findElement(cartButton);
+    }
+public WebElement getViewProductBtn(){
+        return driver.findElement(viewProductBtn);
+    }public List<WebElement> getViewProductBtn2(){
+        return driver.findElements(viewProductBtn2);
+    }
+
+
 }
