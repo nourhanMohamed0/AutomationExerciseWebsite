@@ -1,15 +1,24 @@
-<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
-<suite name="Cross Browser Suite">
-    <test name="Chrome Test">
-        <parameter name="browser" value="chrome"/>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="CompleteTestSuite">
+    <!-- Suite for Product and Cart Tests -->
+    <test name="ProductAndCartTests">
         <classes>
-            <class name="Tests.LoginTest"/>
+            <class name="Tests.ProductTest" />
+            <class name="Tests.CartTest" />
+        </classes>
+    </test>
+
+    <!-- Suite for Cross Browser Testing -->
+    <test name="Chrome Test">
+        <parameter name="browser" value="chrome" />
+        <classes>
+            <class name="Tests.LoginTest" />
         </classes>
     </test>
     <test name="Firefox Test">
-        <parameter name="browser" value="firefox"/>
+        <parameter name="browser" value="firefox" />
         <classes>
-            <class name="Tests.LoginTest"/>
+            <class name="Tests.LoginTest" />
         </classes>
     </test>
 </suite>

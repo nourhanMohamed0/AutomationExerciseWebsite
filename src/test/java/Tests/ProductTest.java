@@ -9,6 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -140,7 +141,7 @@ public class ProductTest extends Base {
     }
     @Test
     public void VerifyAllProductsAndProductDetailPage(){
-        List<WebElement> Btn=productsPage.getViewProductBtn2();
+        List<WebElement> Btn=productsPage.getViewProductBtn();
         for(WebElement button:Btn){
             button.click();
             softAssert.assertFalse(productsPage.getProductBrand().isEmpty());
@@ -153,4 +154,27 @@ public class ProductTest extends Base {
             wait.until(ExpectedConditions.visibilityOf(productsPage.getAllProductTxt()));
         }
         softAssert.assertAll();}
+    @Test
+    public void addToCartFunctionality(){
+       List<WebElement> AddToCartButtons = productsPage.getAddToCartButtons();
+       List<String> products=productsPage.getAllProducts();
+       for(WebElement btn: AddToCartButtons){
+           try{
+           btn.click();
+           softAssert.assertTrue(productsPage.getAddToCartConfirm().isDisplayed());
+           productsPage.getContinueShoppingBtn().click();
+           } catch (RuntimeException e) {
+               System.out.println(e.toString());
+           }
+       }
+       driver.findElement(By.linkText("Cart")).click();
+       List<String> productsInCart=new ArrayList<>();
+       List <WebElement> productsInCartAsElements=productsPage.getProductsNameInCart();
+       for(WebElement product:productsInCartAsElements){
+           productsInCart.add(product.getText());
+       }
+       Set <String>productsList=new HashSet<>(productsInCart);
+       Set <String>productsINCart=new HashSet<>(products);
+       Assert.assertEquals(productsList,productsINCart);
+    }
 }

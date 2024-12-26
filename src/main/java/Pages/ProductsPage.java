@@ -15,17 +15,18 @@ public class ProductsPage {
     By productsName = By.cssSelector(".productinfo.text-center p");
     By womenCategory = By.linkText("Women");
     By productsBtn = By.partialLinkText("Prod");
-    By addToCartBtn=By.linkText("Add to cart");
+    By addToCartBtn=By.xpath("//a[text()='Add to cart']");
     By addToCartConfirm=By.className("modal-content");
     By cartButton=By.linkText("Cart");
-    By viewProductBtn=By.linkText("View Product");
-    By viewProductBtn2=By.xpath("//a[contains(text(),'View Product')]");
+    By viewProductBtn=By.xpath("//a[contains(text(),'View Product')]");
     By productPrice=By.xpath("//span[contains(text(),'Rs')]");
     By productName=By.xpath("(//h2[contains(text(),'')])[3]");
     By productCategory=By.xpath("(//p[contains(text(),'')])[3]");
     By productAvailability=By.xpath("//p[b[text()='Availability:']]");
     By productCondition=By.xpath("//p[b[text()='Condition:']]");
     By productBrand=By.xpath("//p[b[text()='Brand:']]");
+    By continueShoppingBtn=By.xpath("//button[text()='Continue Shopping']");
+    By productsNameInCart=By.xpath("//h4/a[contains(text(),'')]");
 
     public ProductsPage(WebDriver driver) {
         this.driver = driver;
@@ -33,6 +34,12 @@ public class ProductsPage {
 
     public WebElement getProductsBtn() {
         return driver.findElement(productsBtn);
+    }
+    public List<WebElement> getProductsNameInCart() {
+        return driver.findElements(productsNameInCart);
+    }
+public WebElement getContinueShoppingBtn() {
+        return driver.findElement(continueShoppingBtn);
     }
 
     public List<String> getAllProducts() {
@@ -93,10 +100,11 @@ public String getProductCategory(){
     public WebElement getCartBtn(){
         return driver.findElement(cartButton);
     }
-public WebElement getViewProductBtn(){
-        return driver.findElement(viewProductBtn);
-    }public List<WebElement> getViewProductBtn2(){
-        return driver.findElements(viewProductBtn2);
+public List<WebElement> getViewProductBtn(){
+        return driver.findElements(viewProductBtn);
+    }
+public List<WebElement> getAddToCartButtons(){
+        return driver.findElements(addToCartBtn);
     }
 
 
