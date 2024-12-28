@@ -14,6 +14,8 @@ public class CartPage {
     By productPrices=By.xpath("//td[@class='cart_price']/p[contains(text(),'Rs')]");
     By productQuantities=By.xpath("//td[@class='cart_quantity']/button[@class='disabled']");
     By productTotal=By.xpath("//p[@class='cart_total_price']");
+    By proceedToCheckoutBtn =By.xpath("//a[text()='Proceed To Checkout']");
+    By checkoutErrorMsg=By.xpath("//div[@class='modal-content']");
     /**********************************************************************************************/
     public CartPage(WebDriver driver){
      this.driver=driver;
@@ -54,6 +56,12 @@ public List<Integer> getProductsTotalInCart(){
             PricesInteger.add(Integer.parseInt(numberOnly));
         }
         return (PricesInteger);
+    }
+    public WebElement getProceedToCheckoutBtn(){
+        return driver.findElement(proceedToCheckoutBtn);
+    }
+    public WebElement getCheckoutErrorMsg(){
+        return driver.findElement(checkoutErrorMsg);
     }
 
 }

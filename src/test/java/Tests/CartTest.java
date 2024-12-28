@@ -25,6 +25,11 @@ public class CartTest extends Base {
                     Integer.valueOf(quantities.get(i) * prices.get(i)),
                     totals.get(i));
         }
-
+    }
+    @Test(dependsOnMethods = {"Tests.ProductTest.addToCartFunctionality"}, alwaysRun = true)
+    public void proceedToCheckoutWithoutLogin(){
+cartPage.getProceedToCheckoutBtn().click();
+softAssert.assertTrue(cartPage.getCheckoutErrorMsg().isDisplayed());
+softAssert.assertAll();
     }
 }
